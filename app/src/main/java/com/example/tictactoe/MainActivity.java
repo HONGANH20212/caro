@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private TicTacToe tttGame;
     private Button[][] buttons;
+    private TextView status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
         status.setLayoutParams(lpStatus);
         //set up status
         status.setWidth( TicTacToe.SIDE * w);
-        status.setHight(w);
+        status.setHeight(w);
         status.setGravity(Gravity.CENTER);
-        status.SetBackgroundColor(Color.GREEN);
+        status.setBackgroundColor(Color.GREEN);
         status.setTextSize((int)(w * 15));
         status.setText( tttGame.result());
 
@@ -71,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         else if(play == 2)
             buttons[row][col].setText("O");
         if(tttGame.isGameOver()) //game over
-            stutus.setBackgroundCorlor(Color.RED);
+            status.setBackgroundColor(Color.RED);
             enableButtons(false);
             status.setText(tttGame.result());
     }
