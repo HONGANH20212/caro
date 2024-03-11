@@ -31,6 +31,7 @@ public class TicTacToe {
         if(columns > 0)
             return columns;
         int diagonals = checkDiagonal();
+
         if (diagonals > 0)
             return diagonals;
         return 0;
@@ -49,19 +50,23 @@ public class TicTacToe {
     }
     protected int checkDiagonal() {
         if (game[0][0] != 0 && game[0][0] == game[1][1] && game[1][1] == game[2][2])
-                return game[0][0];
+            return game[0][0];
         if (game[0][2] != 0 && game[0][2] == game[1][1] && game[1][1] == game[2][0])
-        return game[2][0];
+            return game[2][0];
     return 0;
     }
+
     public boolean canNotPlay(){
         boolean result = true;
         for (int row = 0; row <SIDE; row++)
                 for (int col = 0; col < SIDE; col++)
-                    if (game[row][col] == 0)
-                        result = false;
+                  if (game[row][col] == 0) {
+                    result = false;
+                    break;
+                  }
         return result;
     }
+
     public boolean isGameOver(){
         return canNotPlay() || (whoWon() > 0);
     }
@@ -71,9 +76,10 @@ public class TicTacToe {
                 game[row][col] = 0;
         turn = 1;
     }
+
     public String result(){
         if(whoWon() > 0)
-            return "player" + whoWon() + "won";
+            return "Player " + whoWon() + " won";
         else if(canNotPlay())
             return "Tie Game";
         else

@@ -3,7 +3,6 @@ package com.example.tictactoe;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Point;
-import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.View;
 import android.os.Bundle;
@@ -13,10 +12,6 @@ import android.graphics.Color;
 import android.view.Gravity;
 import android.widget.TextView;
 import android.content.DialogInterface;
-
-
-
-
 
 public class MainActivity extends AppCompatActivity {
     private TicTacToe tttGame;
@@ -35,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         Point size = new Point();
         getWindowManager().getDefaultDisplay().getSize(size);
         int w = size.x / TicTacToe.SIDE;
+        Log.w("Width of screen: -- ", String.valueOf(size.x));
+        Log.w("Width of Grid Cell: -- ", String.valueOf(w));
 
         //Create the layout manager as a GridLayout
         GridLayout gridLayout = new GridLayout(this);
@@ -63,45 +60,55 @@ public class MainActivity extends AppCompatActivity {
         status.setHeight(w);
         status.setGravity(Gravity.CENTER);
         status.setBackgroundColor(Color.GREEN);
-        status.setTextSize((int)(w * 15));
-        status.setText( tttGame.result());
+        status.setTextSize(3 * 15);
+        status.setText(tttGame.result());
 
         gridLayout.addView(status);
         //Set gridLayout
         setContentView(gridLayout);
     }
+
     public void update(int row, int col){
         int play = tttGame.play(row, col);
-        if( play == 1)
+        if( play == 1) {
             buttons[row][col].setText("X");
-        else if(play == 2)
+        } else if(play == 2) {
             buttons[row][col].setText("O");
-        if(tttGame.isGameOver()) //game over
+        }
+
+        if(tttGame.isGameOver()) {
+            //game over
             status.setBackgroundColor(Color.RED);
-            enableButtons(false);
             status.setText(tttGame.result());
+            enableButtons(false);
+
             showNewGameDialog();  //offer to play again
+        }
+
     }
     public void enableButtons(boolean enabled){
         for (int row = 0; row < TicTacToe.SIDE; row++)
             for( int col = 0; col <TicTacToe.SIDE; col++)
                 buttons[row][col].setEnabled(enabled);
     }
+
     public void resetButton(){
         for (int row = 0; row < TicTacToe.SIDE; row++)
             for (int col = 0; col < TicTacToe.SIDE; col++)
                 buttons[row][col].setText(" ");
     }
+
     public void showNewGameDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("This is fun");
         alert.setMessage("Play again?");
         PlayDialog playAgain = new PlayDialog();
-        alert.setPositiveButton("Yes", playAgain);
-        alert.setPositiveButton("No", playAgain);
+        alert.setPositiveButton("YES", playAgain);
+        alert.setNegativeButton("NO", playAgain);
         alert.show();
     }
-    private class ButtonHandler implements View.OnClickListener{
+
+    private class ButtonHandler implements View.OnClickListener {
         public void onClick(View v){
             Log.w("MainActivity", "Inside onClick, v = " + v );
             for (int row = 0; row < TicTacToe.SIDE; row++)
@@ -110,11 +117,13 @@ public class MainActivity extends AppCompatActivity {
                         update(row, column);
         }
     }
+
     private class PlayDialog implements DialogInterface.OnClickListener {
         public void onClick(DialogInterface dialog, int id){
-            if (id == 1){
+            if (id == -1){
                 tttGame.resetGame();
                 enableButtons(true);
+                resetButton();
                 status.setBackgroundColor(Color.GREEN);// yes button
                 status.setText(tttGame.result());
             }else if (id == -2) { //No button
