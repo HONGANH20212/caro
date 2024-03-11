@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.content.DialogInterface;
 
+
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 gridLayout.addView(buttons[row][col], w, w);
             }
         }
+
         //Set up layout
         status = new TextView(this);
         GridLayout.Spec rowSpec = GridLayout.spec(TicTacToe.SIDE, 1);
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         status.setText(tttGame.result());
 
         gridLayout.addView(status);
+
         //Set gridLayout
         setContentView(gridLayout);
     }
@@ -103,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     public void showNewGameDialog(){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("This is fun");
-        alert.setMessage("Play again?");
+        alert.setMessage("Play again?\n \n 02-Võ Thị Hồng Ánh-N20DCVT002");
         PlayDialog playAgain = new PlayDialog();
         alert.setPositiveButton("YES", playAgain);
         alert.setNegativeButton("NO", playAgain);
@@ -133,4 +136,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
 }
